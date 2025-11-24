@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - master   # ou main si tu veux
+      - master
 
 env:
   REPO_API: ds-api-gateway
@@ -26,14 +26,29 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Build API Gateway JAR
+        run: |
+          cd ds-api-gateway
+          mvn clean package -DskipTests
+          cd ..
+
+      - name: Build Client Service JAR
+        run: |
+          cd client-service
+          mvn clean package -DskipTests
+          cd ..
+
+      - name: Build Account Service JAR
+        run: |
+          cd account-service
+          mvn clean package -DskipTests
+          cd ..
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: List repo files
-        run: ls -R
 
       - name: Build & Push API Gateway
         run: |
