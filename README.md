@@ -1,8 +1,5 @@
-La Gateway agit comme une porte d’entrée unique vers tous les
-microservices.
+La Gateway 
 
-Le Discovery Service est un annuaire central où tous les microservices
-viennent s’enregistrer automatiquement à leur démarrage.
+Le Discovery Service 
 
-Le Config Service est un service optionnel mais fortement recommandé
-dans une architecture microservices.
+Le Config Service  
