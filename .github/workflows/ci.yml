@@ -8,8 +8,8 @@ on:
 
 env:
   REPO_API: ds-api-gateway
-  REPO_CLIENT: client-service
-  REPO_ACCOUNT: account-service
+  REPO_CLIENT: ds-client-service
+  REPO_ACCOUNT: ds-account-service
 
 jobs:
   build:
@@ -34,13 +34,13 @@ jobs:
 
       - name: Build Client Service JAR
         run: |
-          cd client-service
+          cd ds-client-service
           mvn clean package -DskipTests
           cd ..
 
       - name: Build Account Service JAR
         run: |
-          cd account-service
+          cd ds-account-service
           mvn clean package -DskipTests
           cd ..
 
@@ -57,12 +57,12 @@ jobs:
 
       - name: Build & Push Client Service
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_CLIENT }}:latest ./client-service
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_CLIENT }}:latest ./ds-client-service
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_CLIENT }}:latest
 
       - name: Build & Push Account Service
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_ACCOUNT }}:latest ./account-service
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_ACCOUNT }}:latest ./ds-account-service
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_ACCOUNT }}:latest
 
   deploy:
